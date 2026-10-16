@@ -41,6 +41,7 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 .ex td.sc{font-size:32px;font-weight:700;color:var(--acc);line-height:1;width:64px}
 .ex td.pk{width:150px;font-weight:650;font-size:16px}.ex td.pk span{display:block;font-weight:400;font-size:13px;color:var(--mute)}
 .ex .p{color:var(--acc);font-weight:600}.ex .m{color:#c0392b;font-weight:600}
+.qs{display:block;font-size:11px;font-weight:500;color:var(--mute);margin-top:6px;line-height:1.3}.ex td.sc{width:84px}
 .small{font-size:13px;color:var(--mute);margin:10px 0 0}
 .drill{margin:56px 0 -40px;padding:16px 20px;border-radius:var(--r);background:#eef0f7;border:1px solid #d4d8ea;font-size:16px}
 @media (max-width:720px){.ex td,.ex th{display:block}.ex thead{display:none}.ex td.sc,.ex td.pk{width:auto}.grid,.pack{grid-template-columns:1fr}.picks{grid-template-columns:120px 1fr 48px}h1{font-size:30px}}
@@ -49,32 +50,32 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 <h1>Which skill pack should we standardise on?</h1>
 <p class="lede">Four packs, four tasks (video, app, feature, bug fix), one blind judge.</p>
 
-<p class="bl"><strong>Default to superpowers.</strong> Addy Osmani for new apps. pstack for bug fixes only.</p>
+<p class="bl"><strong>Default to Addy Osmani.</strong> Tied for best quality and fastest. superpowers if quality and tests matter more than time. pstack is last on speed and cost.</p>
 
-<table class="ex"><thead><tr><th>Pack</th><th>/100</th><th>Strong</th><th>Weak</th><th>Public view</th></tr></thead><tbody>
-<tr><td class="pk">superpowers<span>Safest default</span></td><td class="sc">89</td>
-<td>Consistent. Well tested. Checks its own work.</td>
-<td>Heavy process. Mid-pack on speed.</td>
-<td><span class="p">+</span> Plan first, real TDD<br><span class="m">&minus;</span> Heavy, token-hungry</td></tr>
-<tr><td class="pk">Addy Osmani<span>Best for new apps</span></td><td class="sc">89</td>
-<td>Best at new builds. Security and accessibility minded. Fastest.</td>
+<table class="ex"><thead><tr><th>Pack</th><th>Overall /100</th><th>Strong</th><th>Weak</th><th>Public view</th></tr></thead><tbody>
+<tr><td class="pk">Addy Osmani<span>Best all round</span></td><td class="sc">87<span class="qs">Quality 89<br>Speed 84</span></td>
+<td>Best at new builds. Security and accessibility minded. Fastest (59 min).</td>
 <td>Checks its own work less.</td>
 <td><span class="p">+</span> Spec first<br><span class="m">&minus;</span> Large, noisy; author says audit it</td></tr>
-<tr><td class="pk">Matt Pocock<span>Lean</span></td><td class="sc">84</td>
+<tr><td class="pk">Matt Pocock<span>Lean, quick</span></td><td class="sc">81<span class="qs">Quality 84<br>Speed 74</span></td>
 <td>Lean, tidy, low risk.</td>
 <td>Light testing. Never best at anything.</td>
 <td><span class="p">+</span> Hugely popular, active<br><span class="m">&minus;</span> Getting complicated</td></tr>
-<tr><td class="pk">pstack<span>Thorough, slow</span></td><td class="sc">83</td>
+<tr><td class="pk">superpowers<span>Best quality, slower</span></td><td class="sc">78<span class="qs">Quality 89<br>Speed 51</span></td>
+<td>Consistent. Well tested. Checks its own work.</td>
+<td>Heavy process. Slow (109 min).</td>
+<td><span class="p">+</span> Plan first, real TDD<br><span class="m">&minus;</span> Heavy, token-hungry</td></tr>
+<tr><td class="pk">pstack<span>Thorough, slowest</span></td><td class="sc">70<span class="qs">Quality 83<br>Speed 40</span></td>
 <td>Most thorough on fixes.</td>
-<td>Slowest. Gaps on security basics in new builds.</td>
+<td>Slowest (159 min). Gaps on security basics in new builds.</td>
 <td><span class="p">+</span> Take a few skills<br><span class="m">&minus;</span> Burns tokens (author agrees)</td></tr>
 </tbody></table>
-<p class="small">Rough ranking: one run per task, 6-point spread. Quality only, token cost not measured. Public view is web search (Aug to Oct 2026, not all sources dated), not a survey.</p>
+<p class="small">Overall = 70% quality + 30% speed. Rough ranking: one run per task, quality spread is 6 points, times vary with cloud load. Token cost not measured; time is only a proxy. Public view is web search (Aug to Oct 2026, not all sources dated), not a survey.</p>
 
 <div class="drill"><strong>Below is drill-down detail.</strong> Scores, evidence, screenshots and videos behind the summary.</div>
 
 <h2>Detail: scores</h2>
-<p class="sub">Out of 25 per task. Highest per task in green.</p>
+<p class="sub">Quality: out of 25 per task, highest in green.</p>
 <table><thead><tr><th>Pack</th><th>Video</th><th>App</th><th>Feature</th><th>Bug fix</th><th>Total</th></tr></thead><tbody>
 <tr><td>Addy Osmani</td><td>21</td><td class="top">24</td><td>22</td><td>22</td><td><strong>89</strong></td></tr>
 <tr><td>superpowers</td><td class="top">22</td><td>22</td><td class="top">23</td><td>22</td><td><strong>89</strong></td></tr>
@@ -90,6 +91,14 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 <tr><td>pstack</td><td>22</td><td>39</td><td>85</td><td>13</td><td><strong>159</strong></td></tr>
 </tbody></table>
 <p class="sub" style="margin-top:10px">Runs were concurrent, so a slow cloud machine could stretch any of them. Some feature and bug-fix start times were rounded, so times are accurate to about a minute. No token cost was logged.</p>
+<h3>Overall score (70% quality, 30% speed)</h3>
+<p class="sub">Speed per task = 25 &times; fastest time &divide; this pack's time, summed to 100. Addy Osmani leads at any speed weight. Matt Pocock passes superpowers once speed counts for more than about 18%. pstack is last at any weight.</p>
+<table><thead><tr><th>Pack</th><th>Quality</th><th>Speed</th><th>Overall</th></tr></thead><tbody>
+<tr><td>Addy Osmani</td><td>89</td><td>84</td><td><strong>87</strong></td></tr>
+<tr><td>Matt Pocock</td><td>84</td><td>74</td><td><strong>81</strong></td></tr>
+<tr><td>superpowers</td><td>89</td><td>51</td><td><strong>78</strong></td></tr>
+<tr><td>pstack</td><td>83</td><td>40</td><td><strong>70</strong></td></tr>
+</tbody></table>
 
 
 <details><summary>Per-criterion scores (correctness, code, scope, verification, craft)</summary><div>
