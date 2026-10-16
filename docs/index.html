@@ -34,21 +34,56 @@ figcaption{font-size:14px;color:var(--mute);margin-top:8px}
 blockquote{margin:0 0 6px;padding-left:14px;border-left:3px solid var(--acc);font-size:15px}
 .ev{font-size:15px;margin:0 0 4px}.src{font-size:12px;color:var(--mute);margin:0 0 16px;word-break:break-all}
 footer{margin-top:72px;color:var(--mute);font-size:13px}
-@media (max-width:720px){.grid,.pack{grid-template-columns:1fr}.picks{grid-template-columns:120px 1fr 48px}h1{font-size:30px}}
+.bl{padding:18px 22px;border-radius:var(--r);background:#e8f5ef;border:1px solid #bfe0d0;font-size:18px;margin:0 0 28px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.card.best{border:2px solid var(--acc)}
+.ch{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px}
+.cn{font-size:22px;font-weight:650}.cv{color:var(--mute);font-size:15px}
+.big{font-size:52px;line-height:1;font-weight:700;color:var(--acc);font-variant-numeric:tabular-nums}.big small{font-size:16px;color:var(--mute);font-weight:500}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.card h4{margin:0 0 6px;font-size:13px;text-transform:uppercase;letter-spacing:.05em}
+h4.g{color:var(--acc)}h4.b{color:#c0392b}
+.card ul{margin:0;padding-left:18px;font-size:15px}.card li{margin:0 0 4px}
+.pub{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}.pub h4{color:var(--mute)}
+.drill{margin:56px 0 -40px;padding:16px 20px;border-radius:var(--r);background:#eef0f7;border:1px solid #d4d8ea;font-size:16px}
+@media (max-width:720px){.cards,.cols{grid-template-columns:1fr}.grid,.pack{grid-template-columns:1fr}.picks{grid-template-columns:120px 1fr 48px}h1{font-size:30px}}
 </style></head><body><main>
 
 <h1>Which skill pack should we standardise on?</h1>
-<p class="lede">Four packs, four real tasks, one blind judge. Each pack built a promo video, a full task-board app, a new feature and a bug fix on the same model and prompts. Scores out of 100.</p>
+<p class="lede">Executive summary. Four packs, four real tasks (promo video, task-board app, new feature, bug fix), one blind judge, same model and prompts.</p>
 
-<div class="picks">
-<div class="n">superpowers</div><div>Safest default. Steady 22 to 23 on every task, most tests, best video and best feature.</div><div class="s">89</div>
-<div class="n">Addy Osmani</div><div>Best at greenfield apps. Strictest session-expiry check and the only keyboard drag. Weakest at checking its own video.</div><div class="s">89</div>
-<div class="n">Matt Pocock</div><div>Lean and tidy, no surprises, but thinner tests and no task win.</div><div class="s">84</div>
-<div class="n">pstack</div><div>Excellent at bug fixes (perfect 25). Weakest app and feature, and slowest: 159 min in total, 85 on the feature alone.</div><div class="s">83</div>
+<div class="bl"><strong>Bottom line:</strong> Standardise on <strong>superpowers</strong> as the default. It ties Addy Osmani on score (89) but is steadier across every task. Use <strong>Addy Osmani</strong> for new apps. Use <strong>pstack</strong> only for bug fixes where thoroughness beats speed and cost.</div>
+
+<div class="cards">
+
+<div class="card best"><div class="ch"><div><div class="cn">superpowers</div><div class="cv">Safest default</div></div><div class="big">89<small>/100</small></div></div>
+<div class="cols"><div><h4 class="g">Good at</h4><ul><li>Steady: 22 to 23 on every task</li><li>Most tests, best feature</li><li>Best video, checks its own work</li><li>Mid-pack on time: 109 min in total</li></ul></div>
+<div><h4 class="b">Weak at</h4><ul><li>App has no keyboard drag</li><li>Video motion is stiff</li></ul></div></div>
+<div class="pub"><h4>What people say (Aug to Oct 2026)</h4><ul><li>Praised: plan first, real TDD, subagent reviews catch things.</li><li>Criticised: heavy, burns tokens, overkill for small tasks.</li></ul></div></div>
+
+<div class="card best"><div class="ch"><div><div class="cn">Addy Osmani</div><div class="cv">Best for new apps</div></div><div class="big">89<small>/100</small></div></div>
+<div class="cols"><div><h4 class="g">Good at</h4><ul><li>Best app (24/25)</li><li>Strictest session security</li><li>Only app with keyboard drag</li><li>Best looking video</li><li>Fastest overall: 59 min in total</li></ul></div>
+<div><h4 class="b">Weak at</h4><ul><li>Weakest at checking its own video</li><li>Lower on features and bug fixes (22 each)</li></ul></div></div>
+<div class="pub"><h4>What people say (Aug to Oct 2026)</h4><ul><li>Mostly positive: spec first, scope discipline.</li><li>Critics: large, adds noise and token cost. Author says audit your skills.</li></ul></div></div>
+
+<div class="card"><div class="ch"><div><div class="cn">Matt Pocock</div><div class="cv">Lean, no surprises</div></div><div class="big">84<small>/100</small></div></div>
+<div class="cols"><div><h4 class="g">Good at</h4><ul><li>Tidy, minimal output</li><li>Hashed session tokens</li><li>No bugs on the feature</li></ul></div>
+<div><h4 class="b">Weak at</h4><ul><li>Thin tests</li><li>Did not win any task</li><li>App shows emails, not names</li></ul></div></div>
+<div class="pub"><h4>What people say (Aug to Oct 2026)</h4><ul><li>Very popular (about 290k GitHub stars), still actively updated.</li><li>Some say the skills are getting too complicated.</li></ul></div></div>
+
+<div class="card"><div class="ch"><div><div class="cn">pstack</div><div class="cv">Thorough but slow</div></div><div class="big">83<small>/100</small></div></div>
+<div class="cols"><div><h4 class="g">Good at</h4><ul><li>Best bug fix (perfect 25)</li><li>Clean code</li></ul></div>
+<div><h4 class="b">Weak at</h4><ul><li>Weakest app and feature (19 each)</li><li>Sessions never expire</li><li>Slowest: 159 min in total, 85 on the feature alone</li></ul></div></div>
+<div class="pub"><h4>What people say (Aug to Oct 2026)</h4><ul><li>Best in Cursor. Even the author warns it uses a lot of tokens.</li><li>Reviewers suggest taking a few skills, not the whole thing.</li></ul></div></div>
+
 </div>
-<p class="note"><strong>Read as a rough ranking.</strong> Each pack ran each task once. The whole spread is 6 points out of 100 and one rerun could flip it. Token cost was not logged, so this compares quality, not spend. Every app, feature and bug-fix output passed its own tests on a clean machine.</p>
 
-<h2>Scores</h2>
+<p class="note"><strong>Read as a rough ranking.</strong> One run per pack per task. The whole spread is 6 points and one rerun could flip it. Token cost was not measured, so this is quality, not spend. Every output passed its own tests on a clean machine. Public views come from web search of articles, forum posts and X; not every source is dated, and none is a formal survey.</p>
+
+<div class="drill"><strong>Everything below is for drill down.</strong> Full scores, evidence, screenshots and videos for anyone who wants to check the summary above.</div>
+
+<h2>Detail: scores</h2>
 <p class="sub">Out of 25 per task. Highest per task in green.</p>
 <table><thead><tr><th>Pack</th><th>Video</th><th>App</th><th>Feature</th><th>Bug fix</th><th>Total</th></tr></thead><tbody>
 <tr><td>Addy Osmani</td><td>21</td><td class="top">24</td><td>22</td><td>22</td><td><strong>89</strong></td></tr>
