@@ -15,6 +15,19 @@ Pack versions: pstack `850d7f2e` (0.15.25), superpowers `bb92a777`, Matt Pocock 
 | Matt Pocock skills | 21 | 20 | 22 | 21 | 84 |
 | pstack | 20 | 19 | 19 | 25 | 83 |
 
+## Time to finish (minutes)
+
+Wall-clock minutes, start to finish, on cloud agents, including any extra agents a pack spawned.
+
+| Pack | Video | App | Feature | Bugfix | Total |
+|---|---|---|---|---|---|
+| Addy Osmani skills | **12** | **21** | **11** | 14 | 59 |
+| Matt Pocock skills | 15 | 31 | 22 | **5** | 72 |
+| superpowers | 18 | 49 | 33 | 8 | 109 |
+| pstack | 22 | 39 | 85 | 13 | 159 |
+
+Bold is fastest per task. Runs were concurrent, so a slow cloud machine could stretch any of them. Some feature and bugfix start times were rounded, so times are accurate to about a minute. No token cost was logged.
+
 ## Per-criterion scores
 
 Criteria: Corr = correctness, Code = code quality, Scope = scope discipline, Verif = verification, Craft = craft.

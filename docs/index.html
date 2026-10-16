@@ -41,10 +41,10 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 <p class="lede">Four packs, four real tasks, one blind judge. Each pack built a promo video, a full task-board app, a new feature and a bug fix on the same model and prompts. Scores out of 100.</p>
 
 <div class="picks">
-<div class="n">superpowers</div><div>Safest default. Steady 22 to 23 on every task, most tests, best video and best feature. Fast.</div><div class="s">89</div>
+<div class="n">superpowers</div><div>Safest default. Steady 22 to 23 on every task, most tests, best video and best feature.</div><div class="s">89</div>
 <div class="n">Addy Osmani</div><div>Best at greenfield apps. Strictest session-expiry check and the only keyboard drag. Weakest at checking its own video.</div><div class="s">89</div>
 <div class="n">Matt Pocock</div><div>Lean and tidy, no surprises, but thinner tests and no task win.</div><div class="s">84</div>
-<div class="n">pstack</div><div>Excellent at bug fixes (perfect 25). Weakest app and feature, and far slower: 85 min on the feature vs 10 to 32.</div><div class="s">83</div>
+<div class="n">pstack</div><div>Excellent at bug fixes (perfect 25). Weakest app and feature, and slowest: 159 min in total, 85 on the feature alone.</div><div class="s">83</div>
 </div>
 <p class="note"><strong>Read as a rough ranking.</strong> Each pack ran each task once. The whole spread is 6 points out of 100 and one rerun could flip it. Token cost was not logged, so this compares quality, not spend. Every app, feature and bug-fix output passed its own tests on a clean machine.</p>
 
@@ -56,6 +56,16 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 <tr><td>Matt Pocock</td><td>21</td><td>20</td><td>22</td><td>21</td><td><strong>84</strong></td></tr>
 <tr><td>pstack</td><td>20</td><td>19</td><td>19</td><td class="top">25</td><td><strong>83</strong></td></tr>
 </tbody></table>
+<h3>Time to finish</h3>
+<p class="sub">Wall-clock minutes, start to finish, on cloud agents, including any extra agents a pack spawned. Fastest per task in green.</p>
+<table><thead><tr><th>Pack</th><th>Video</th><th>App</th><th>Feature</th><th>Bug fix</th><th>Total</th></tr></thead><tbody>
+<tr><td>Addy Osmani</td><td class="top">12</td><td class="top">21</td><td class="top">11</td><td>14</td><td><strong>59</strong></td></tr>
+<tr><td>Matt Pocock</td><td>15</td><td>31</td><td>22</td><td class="top">5</td><td><strong>72</strong></td></tr>
+<tr><td>superpowers</td><td>18</td><td>49</td><td>33</td><td>8</td><td><strong>109</strong></td></tr>
+<tr><td>pstack</td><td>22</td><td>39</td><td>85</td><td>13</td><td><strong>159</strong></td></tr>
+</tbody></table>
+<p class="sub" style="margin-top:10px">Runs were concurrent, so a slow cloud machine could stretch any of them. Some feature and bug-fix start times were rounded, so times are accurate to about a minute. No token cost was logged.</p>
+
 
 <details><summary>Per-criterion scores (correctness, code, scope, verification, craft)</summary><div>
 <h3>Video</h3><table><tr><th>Pack</th><th>Corr</th><th>Code</th><th>Scope</th><th>Verif</th><th>Craft</th></tr>
