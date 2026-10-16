@@ -101,3 +101,12 @@ All four persist comments with cascade delete and enforce author-only delete on 
 
 - Token cost couldn't be logged for any run, so the scores compare quality only. Wall-clock time varied a lot: pstack's feature run took 85 minutes against 10 to 32 for the other packs, and its app run took 39 minutes. It also started extra cloud agents for reviews and alternative designs.
 - Each pack ran each task once. The spread from first to last is 6 points out of 100, which one rerun could flip. On the bug fix, all four packs made the same one-line fix, so the scores there differ only because of the tests. The clearest real differences are in the app task: one app's sessions never expire, and only one supports keyboard drag.
+
+## Appendix: what people said on X (mid-Aug to mid-Oct 2026)
+
+X only; Reddit, HN and GitHub not covered, and links weren't opened to check them.
+
+- superpowers: most praised for plan-first, enforced TDD and parallel subagents ([@KinanHamwi](https://x.com/KinanHamwi/status/2091341955833704605)). Some ask whether newer models make it unnecessary.
+- Matt Pocock: positive, mostly about /grill-me and small composable skills ([@johann_sath](https://x.com/johann_sath/status/2091242411657724404)).
+- Addy Osmani: positive, spec-first; v0.6.12 pauses for a human after saving a spec ([@byCanen](https://x.com/byCanen/status/2108500573141991434)).
+- pstack: /poteto-mode liked, but said to work best in Cursor and to burn tokens ([@velvet_shark](https://x.com/velvet_shark/status/2094729199445508338), [@T1redDeveloper](https://x.com/T1redDeveloper/status/2104188633846591923)), consistent with its slow, agent-heavy runs here.
