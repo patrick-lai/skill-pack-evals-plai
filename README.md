@@ -96,3 +96,8 @@ Scored on code, tests and README only (process notes excluded for all four after
 | pstack | 19 | 8 / 18 | Widest diff (18 files), fewest tests, no empty state, no count shown at 0 comments. |
 
 All four persist comments with cascade delete and enforce author-only delete on the server; none confirms before deleting. Full notes in `scores/feature.md`.
+
+## Caveats on cost and margins
+
+- Token cost couldn't be logged for any run, so the scores compare quality only. Wall-clock time varied a lot: pstack's feature run took 85 minutes against 10 to 32 for the other packs, and its app run took 39 minutes. It also started extra cloud agents for reviews and alternative designs.
+- Each pack ran each task once. The spread from first to last is 6 points out of 100, which one rerun could flip. On the bug fix, all four packs made the same one-line fix, so the scores there differ only because of the tests. The clearest real differences are in the app task: session expiry and keyboard drag.
