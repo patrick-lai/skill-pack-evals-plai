@@ -100,4 +100,4 @@ All four persist comments with cascade delete and enforce author-only delete on 
 ## Caveats on cost and margins
 
 - Token cost couldn't be logged for any run, so the scores compare quality only. Wall-clock time varied a lot: pstack's feature run took 85 minutes against 10 to 32 for the other packs, and its app run took 39 minutes. It also started extra cloud agents for reviews and alternative designs.
-- Each pack ran each task once. The spread from first to last is 6 points out of 100, which one rerun could flip. On the bug fix, all four packs made the same one-line fix, so the scores there differ only because of the tests. The clearest real differences are in the app task: session expiry and keyboard drag.
+- Each pack ran each task once. The spread from first to last is 6 points out of 100, which one rerun could flip. On the bug fix, all four packs made the same one-line fix, so the scores there differ only because of the tests. The clearest real differences are in the app task: one app's sessions never expire, and only one supports keyboard drag.

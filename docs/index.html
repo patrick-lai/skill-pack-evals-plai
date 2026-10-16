@@ -42,7 +42,7 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 
 <div class="picks">
 <div class="n">superpowers</div><div>Safest default. Steady 22 to 23 on every task, most tests, best video and best feature. Fast.</div><div class="s">89</div>
-<div class="n">Addy Osmani</div><div>Best at greenfield apps. Only app with session expiry and keyboard drag. Weakest at checking its own video.</div><div class="s">89</div>
+<div class="n">Addy Osmani</div><div>Best at greenfield apps. Strictest session-expiry check and the only keyboard drag. Weakest at checking its own video.</div><div class="s">89</div>
 <div class="n">Matt Pocock</div><div>Lean and tidy, no surprises, but thinner tests and no task win.</div><div class="s">84</div>
 <div class="n">pstack</div><div>Excellent at bug fixes (perfect 25). Weakest app and feature, and far slower: 85 min on the feature vs 10 to 32.</div><div class="s">83</div>
 </div>
@@ -76,7 +76,7 @@ footer{margin-top:72px;color:var(--mute);font-size:13px}
 <p class="src">bench/feature-superpowers/.cursor/skills/test-driven-development/SKILL.md:34</p></div></div>
 <div class="pack"><div class="n"><strong>Addy Osmani</strong></div><div>
 <blockquote>Session cookies are `httpOnly`, `secure`, and `sameSite: 'lax'` or `'strict'` ... with a bounded `maxAge`.</blockquote>
-<p class="ev">Only app that expires sessions in the database query: "WHERE s.id = ? AND s.expires_at &gt; ?".</p>
+<p class="ev">Strictest expiry check, done in the database query: "WHERE s.id = ? AND s.expires_at &gt; ?".</p>
 <p class="src">bench/app-addyosmani/.cursor/skills/security-and-hardening/SKILL.md:90</p>
 <blockquote>Every interactive element must be keyboard accessible</blockquote>
 <p class="ev">Only app with keyboard drag between columns (KeyboardSensor with sortableKeyboardCoordinates).</p>
