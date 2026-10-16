@@ -1,0 +1,22 @@
+{
+  "name": "bench",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Bench is a local team task board.",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "start": "concurrently -k -n api,web -c cyan,magenta \"npm run start -w @bench/server\" \"npm run dev -w @bench/client\"",
+    "test": "npm run test -w @bench/server && npm run test -w @bench/client",
+    "typecheck": "npm run typecheck -w @bench/server && npm run typecheck -w @bench/client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

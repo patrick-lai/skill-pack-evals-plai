@@ -1,0 +1,25 @@
+{
+  "name": "tidy-intro",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --experimental-strip-types --test src/timeline.test.ts",
+    "typecheck": "tsc --noEmit",
+    "check": "node scripts/check-mp4.mjs",
+    "studio": "remotion studio src/index.ts --port 43123",
+    "render": "remotion render src/index.ts TidyIntro renders/tidy-intro.mp4 --codec=h264"
+  },
+  "dependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/outfit": "^5.3.0",
+    "@remotion/cli": "^4.0.535",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "remotion": "^4.0.535"
+  },
+  "devDependencies": {
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

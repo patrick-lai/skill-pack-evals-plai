@@ -1,0 +1,11 @@
+ts	phase	decision	why	evidence	result
+2026-10-15T23:14:26Z	setup	installed the attached pstack pin into .cursor/skills and discarded the github clone	the follow-up said to use only the attached marketplace pin	/tmp/pstack-pinned/850d7f2e9f5e55dff7eb00a0a479337fe79eb22f/plugin.json	installed, 54 skills
+2026-10-15T23:20:00Z	arena	skipped the how walk and architect grounding	the repo has only a seeded README, so there is no subsystem to read	/tmp/arena-taskboard/grounding.md	skipped
+2026-10-15T23:22:00Z	arena	second design runner is grok-4.7-xhigh because claude-opus-5-5-xhigh and claude-sonnet-5-5-high both refused for usage	arena wants two candidates and the tool said to retry on a first-party model	candidate-grok and candidate-grok-b	running
+2026-10-15T23:32:00Z	design	cookie session, memberships, and one move command	a bearer token would sit in the browser, a private board cannot be assigned, and drag and the status menu must share one order	shared/src/move.ts server/src/app.ts	tests green
+2026-10-15T23:32:00Z	design	Node's built-in sqlite instead of a native addon	one npm install should not need a compiler toolchain	server/src/db.ts	tests green
+2026-10-15T23:40:00Z	build	wrote the app in this workspace	the design runners are separate machines and had not left a sketch here	shared server client	typecheck and tests green
+2026-10-15T23:45:00Z	graft	kept task status plus position, and took the exclusive sqlite lock	the finished runner stored columns as arrays and streamed updates. that is a second shape. the lock is the part that protects the one file	server/src/db.ts	open
+2026-10-15T23:49:00Z	verify	a signed-out session check returns an empty user	Chrome logged a 401 on the sign-in page for the expected logged-out state	server/src/app.ts client/src/session.tsx	login page console clean
+2026-10-15T23:48:00Z	verify	drag from To do to Doing survived a reload in Chrome	the card has to stay in the lane the person dropped it on	/tmp/plank-shots/05-reloaded.png	passed
+2026-10-15T23:51:00Z	fix	default database path is data/plank.sqlite at the repo root	npm start runs the API with cwd server/, so a relative data/ path wrote server/data	server/src/index.ts	open

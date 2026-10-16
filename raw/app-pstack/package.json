@@ -1,0 +1,18 @@
+{
+  "name": "plank",
+  "private": true,
+  "version": "0.0.0",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "start": "concurrently --kill-others-on-fail -n api,web -c cyan,green \"npm run start -w @plank/server\" \"npm run dev -w @plank/client\"",
+    "test": "npm run test -w @plank/shared && npm run test -w @plank/server && npm run test -w @plank/client",
+    "typecheck": "npm run typecheck -w @plank/shared && npm run typecheck -w @plank/server && npm run typecheck -w @plank/client"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

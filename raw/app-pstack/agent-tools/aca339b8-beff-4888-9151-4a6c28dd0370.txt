@@ -1,0 +1,840 @@
+DatabaseSync | Node.js 26.10.0 Documentation
+
+# DatabaseSync
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+Introduced in: v22.5.0 v22.5.0
+
+Add `timeout` option.
+
+v24.0.0, v22.16.0
+
+The `path` argument now supports Buffer and URL objects.
+
+v23.10.0, v22.15.0
+
+This class represents a single connection to a SQLite database. All APIs exposed by this class execute synchronously.
+
+## DatabaseSync Constructor
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+Enable `defensive` by default.
+
+v25.5.0, v24.14.0
+
+Add `defensive` option.
+
+v25.1.0, v24.12.0
+
+Add new SQLite database options.
+
+v24.4.0, v22.18.0
+
+`new DatabaseSync(path, options?): DatabaseSync`
+
+Attributes
+
+path:`string | Buffer | URL`
+
+The path of the database. A SQLite database can be stored in a file or completely in memory. To use a file-backed database, the path should be a file path. To use an in-memory database, the path should be the special name `':memory:'`.
+
+options:`Object`
+
+Configuration options for the database connection. The following options are supported:
+
+open?:`boolean`
+
+If `true`, the database is opened by the constructor. When this value is `false`, the database must be opened via the `open()` method. Default: `true`.
+
+readOnly?:`boolean`
+
+If `true`, the database is opened in read-only mode. If the database does not exist, opening it will fail. Default: `false`.
+
+enableForeignKeyConstraints?:`boolean`
+
+If `true`, foreign key constraints are enabled. This is recommended but can be disabled for compatibility with legacy database schemas. The enforcement of foreign key constraints can be enabled and disabled after opening the database using `PRAGMA foreign_keys`. Default: `true`.
+
+enableDoubleQuotedStringLiterals?:`boolean`
+
+If `true`, SQLite will accept double-quoted string literals. This is not recommended but can be enabled for compatibility with legacy database schemas. Default: `false`.
+
+allowExtension?:`boolean`
+
+If `true`, the `loadExtension` SQL function and the `loadExtension()` method are enabled. You can call `enableLoadExtension(false)` later to disable this feature. Default: `false`.
+
+timeout?:`number`
+
+The busy timeout in milliseconds. This is the maximum amount of time that SQLite will wait for a database lock to be released before returning an error. Default: `0`.
+
+readBigInts?:`boolean`
+
+If `true`, integer fields are read as JavaScript `BigInt` values. If `false`, integer fields are read as JavaScript numbers. Default: `false`.
+
+returnArrays?:`boolean`
+
+If `true`, query results are returned as arrays instead of objects. Default: `false`.
+
+allowBareNamedParameters?:`boolean`
+
+If `true`, allows binding named parameters without the prefix character (e.g., `foo` instead of `:foo`). Default: `true`.
+
+allowUnknownNamedParameters?:`boolean`
+
+If `true`, unknown named parameters are ignored when binding. If `false`, an exception is thrown for unknown named parameters. Default: `false`.
+
+defensive?:`boolean`
+
+If `true`, enables the defensive flag. When the defensive flag is enabled, language features that allow ordinary SQL to deliberately corrupt the database file are disabled. The defensive flag can also be set using `enableDefensive()`. Default: `true`.
+
+limits:`Object`
+
+Configuration for various SQLite limits. These limits can be used to prevent excessive resource consumption when handling potentially malicious input. See Run-Time Limits and Limit Constants in the SQLite documentation for details. Default values are determined by SQLite's compile-time defaults and may vary depending on how SQLite was built. The following properties are supported:
+
+length:`number` Maximum length of a string or BLOB.
+
+sqlLength:`number` Maximum length of an SQL statement.
+
+column:`number` Maximum number of columns.
+
+exprDepth:`number` Maximum depth of an expression tree.
+
+compoundSelect:`number` Maximum number of terms in a compound SELECT.
+
+vdbeOp:`number` Maximum number of VDBE instructions.
+
+functionArg:`number` Maximum number of function arguments.
+
+attach:`number` Maximum number of attached databases.
+
+likePatternLength:`number` Maximum length of a LIKE pattern.
+
+variableNumber:`number` Maximum number of SQL variables.
+
+triggerDepth:`number` Maximum trigger recursion depth.
+
+Constructs a new `DatabaseSync` instance.
+
+## database.aggregate
+
+History
+
+Added in: v24.0.0, v22.16.0 v24.0.0, v22.16.0
+
+`database.aggregate(name, options): void`
+
+Registers a new aggregate function with the SQLite database. This method is a wrapper around `sqlite3_create_window_function()`.
+
+Attributes
+
+name:`string` The name of the SQLite function to create.
+
+Function configuration settings.
+
+deterministic?:`boolean`
+
+If `true`, the `SQLITE_DETERMINISTIC` flag is set on the created function. Default: `false`.
+
+directOnly?:`boolean`
+
+If `true`, the `SQLITE_DIRECTONLY` flag is set on the created function. Default: `false`.
+
+useBigIntArguments?:`boolean`
+
+If `true`, integer arguments to `options.step` and `options.inverse` are converted to `BigInt` s. If `false`, integer arguments are passed as JavaScript numbers. Default: `false`.
+
+varargs?:`boolean`
+
+If `true`, `options.step` and `options.inverse` may be invoked with any number of arguments (between zero and `SQLITE_MAX_FUNCTION_ARG`). If `false`, `inverse` and `step` must be invoked with exactly `length` arguments, and their `length` properties must be integers. Default: `false`.
+
+start:`number | string | null | Array | Object | Function`
+
+The identity value for the aggregation function. This value is used when the aggregation function is initialized. When a `Function` is passed the identity will be its return value.
+
+step:`Function`
+
+The function to call for each row in the aggregation. The function receives the current state and the row value. The return value of this function should be the new state.
+
+result:`Function`
+
+The function to call to get the result of the aggregation. The function receives the final state and should return the result of the aggregation.
+
+inverse:`Function`
+
+When this function is provided, the `aggregate` method will work as a window function. The function receives the current state and the dropped row value. The return value of this function should be the new state.
+
+When used as a window function, the `result` function will be called multiple times.
+
+`const { DatabaseSync } = require('node:sqlite');
+
+const db = new DatabaseSync(':memory:');
+db.exec(`
+ CREATE TABLE t3(x, y);
+ INSERT INTO t3 VALUES ('a', 4),
+ ('b', 5),
+ ('c', 3),
+ ('d', 8),
+ ('e', 1);
+`);
+
+db.aggregate('sumint', {
+ start: 0,
+ step: (acc, value) => acc + value,
+});
+
+using query = db.prepare('SELECT sumint(y) as total FROM t3');
+query.get(); // { total: 21 }`
+
+`import { DatabaseSync } from 'node:sqlite';
+
+const db = new DatabaseSync(':memory:');
+db.exec(`
+ CREATE TABLE t3(x, y);
+ INSERT INTO t3 VALUES ('a', 4),
+ ('b', 5),
+ ('c', 3),
+ ('d', 8),
+ ('e', 1);
+`);
+
+db.aggregate('sumint', {
+ start: 0,
+ step: (acc, value) => acc + value,
+});
+
+using query = db.prepare('SELECT sumint(y) as total FROM t3');
+query.get(); // { total: 21 }`
+
+## database.close
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+`database.close(): void`
+
+Closes the database connection. An exception is thrown if the database is not open. An `ERR_INVALID_STATE` error is thrown if the method is called while a statement is executing, such as inside a user-defined function, an aggregate function, an authorizer callback, or a `'sqlite.db.query'` subscriber. This method is a wrapper around `sqlite3_close_v2()`.
+
+## database.loadExtension
+
+History
+
+Added in: v23.5.0, v22.13.0 v23.5.0, v22.13.0
+
+`database.loadExtension(path, entryPoint?): void`
+
+Attributes
+
+path:`string` The path to the shared library to load.
+
+entryPoint:`string`
+
+The name of the extension's entry-point function. When omitted, SQLite derives the entry point from the shared library's filename; pass this argument explicitly when the derived name does not match.
+
+Loads a shared library into the database connection. This method is a wrapper around `sqlite3_load_extension()`. It is required to enable the `allowExtension` option when constructing the `DatabaseSync` instance.
+
+`import { DatabaseSync } from 'node:sqlite';
+const database = new DatabaseSync(':memory:', { allowExtension: true });
+
+// Load using the entry point derived from the filename.
+database.loadExtension('./decimal.dylib');
+
+// Override the entry point when the derived name does not match.
+database.loadExtension('./base64.dylib', 'sqlite3_base64_init');`
+
+`const { DatabaseSync } = require('node:sqlite');
+const database = new DatabaseSync(':memory:', { allowExtension: true });
+
+// Load using the entry point derived from the filename.
+database.loadExtension('./decimal.dylib');
+
+// Override the entry point when the derived name does not match.
+database.loadExtension('./base64.dylib', 'sqlite3_base64_init');`
+
+## database.enableLoadExtension
+
+History
+
+Added in: v23.5.0, v22.13.0 v23.5.0, v22.13.0
+
+`database.enableLoadExtension(allow): void`
+
+allow:`boolean` Whether to allow loading extensions.
+
+Enables or disables the `loadExtension` SQL function, and the `loadExtension()` method. When `allowExtension` is `false` when constructing, you cannot enable loading extensions for security reasons.
+
+## database.enableDefensive
+
+History
+
+Added in: v25.1.0, v24.12.0 v25.1.0, v24.12.0
+
+`database.enableDefensive(active): void`
+
+active:`boolean` Whether to set the defensive flag.
+
+Enables or disables the defensive flag. When the defensive flag is active, language features that allow ordinary SQL to deliberately corrupt the database file are disabled. See `SQLITE_DBCONFIG_DEFENSIVE` in the SQLite documentation for details.
+
+## database.location
+
+History
+
+Added in: v24.0.0, v22.16.0 v24.0.0, v22.16.0
+
+`database.location(dbName?): string | null`
+
+dbName?:`string`
+
+Name of the database. This can be `'main'` (the default primary database) or any other database that has been added with `ATTACH DATABASE` Default: `'main'`.
+
+Returns:`string | null`
+
+The location of the database file. When using an in-memory database, this method returns null.
+
+This method is a wrapper around `sqlite3_db_filename()`
+
+## database.exec
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+`database.exec(sql): void`
+
+sql:`string` A SQL string to execute.
+
+This method allows one or more SQL statements to be executed without returning any results. This method is useful when executing SQL statements read from a file. This method is a wrapper around `sqlite3_exec()`.
+
+## database.function
+
+History
+
+Added in: v23.5.0, v22.13.0 v23.5.0, v22.13.0
+
+`database.function(name, options?, fn): void`
+
+name:`string` The name of the SQLite function to create.
+
+Optional configuration settings for the function. The following properties are supported:
+
+deterministic?:`boolean`
+
+If `true`, the `SQLITE_DETERMINISTIC` flag is set on the created function. Default: `false`.
+
+directOnly?:`boolean`
+
+If `true`, the `SQLITE_DIRECTONLY` flag is set on the created function. Default: `false`.
+
+useBigIntArguments?:`boolean`
+
+If `true`, integer arguments to `function` are converted to `BigInt` s. If `false`, integer arguments are passed as JavaScript numbers. Default: `false`.
+
+varargs?:`boolean`
+
+If `true`, `function` may be invoked with any number of arguments (between zero and `SQLITE_MAX_FUNCTION_ARG`). If `false`, `function` must be invoked with exactly `function.length` arguments, which must be an integer. Default: `false`.
+
+fn:`Function`
+
+The JavaScript function to call when the SQLite function is invoked. The return value of this function should be a valid SQLite data type: see Type conversion between JavaScript and SQLite. The result defaults to `NULL` if the return value is `undefined`.
+
+This method is used to create SQLite user-defined functions. This method is a wrapper around `sqlite3_create_function_v2()`.
+
+## database.setAuthorizer
+
+History
+
+Added in: v24.10.0 v24.10.0
+
+Accessing the invoking database connection from the authorizer callback now throws.
+
+v26.8.0
+
+`database.setAuthorizer(callback): void`
+
+callback:`Function | null`
+
+The authorizer function to set, or `null` to clear the current authorizer.
+
+Sets an authorizer callback that SQLite will invoke whenever it attempts to access data or modify the database schema through prepared statements. This can be used to implement security policies, audit access, or restrict certain operations. This method is a wrapper around `sqlite3_set_authorizer()`.
+
+When invoked, the callback receives five arguments:
+
+actionCode:`number`
+
+The type of operation being performed (e.g., `SQLITE_INSERT`, `SQLITE_UPDATE`, `SQLITE_SELECT`).
+
+arg1:`string | null` The first argument (context-dependent, often a table name).
+
+arg2:`string | null`
+
+The second argument (context-dependent, often a column name).
+
+dbName:`string | null` The name of the database.
+
+triggerOrView:`string | null` The name of the trigger or view causing the access.
+
+The callback must return one of the following constants:
+
+- `SQLITE_OK` - Allow the operation.
+- `SQLITE_DENY` - Deny the operation (causes an error).
+- `SQLITE_IGNORE` - Ignore the operation (silently skip).
+
+SQLite requires that the authorizer callback not modify the database connection that invoked it, which includes preparing and stepping statements. Methods that would do so throw an error with code `ERR_INVALID_STATE` while the callback is on the stack, including `database.prepare()`, `database.exec()`, the execution methods of that connection's statements, iterators, and tag stores, and `database.setAuthorizer()` itself. Other connections remain usable.
+
+The callback can also be invoked from within `statement.run()`, `statement.get()`, and similar methods, because SQLite may re-prepare a statement during execution after a schema change.
+
+Separately, a statement that is currently being executed cannot be reentered. Calling `statement.close()` on it would free the virtual machine that is running, and re-running it through `statement.run()`, `statement.get()`, `statement.all()`, `statement.iterate()`, `iterator.next()`, `iterator.return()`, or the equivalent tag store methods would reset that virtual machine mid-execution. All of these throw an `ERR_INVALID_STATE` error instead. This applies to any callback SQLite invokes during execution, such as a user-defined function. Other statements on the connection remain usable.
+
+Operations that touch no SQLite state stay available from the callback: `sqlTagStore.clear()`, which only drops cached statements, and `next()` and `return()` on an already-drained iterator, which keep returning `{ done: true }`.
+
+`const { DatabaseSync, constants } = require('node:sqlite');
+const db = new DatabaseSync(':memory:');
+
+// Set up an authorizer that denies all table creation
+db.setAuthorizer((actionCode) => {
+ if (actionCode === constants.SQLITE_CREATE_TABLE) {
+ return constants.SQLITE_DENY;
+ }
+ return constants.SQLITE_OK;
+});
+
+// This will work
+using query = db.prepare('SELECT 1');
+query.get();
+
+// This will throw an error due to authorization denial
+try {
+ db.exec('CREATE TABLE blocked (id INTEGER)');
+} catch (err) {
+ console.log('Operation blocked:', err.message);
+}`
+
+`import { DatabaseSync, constants } from 'node:sqlite';
+const db = new DatabaseSync(':memory:');
+
+// Set up an authorizer that denies all table creation
+db.setAuthorizer((actionCode) => {
+ if (actionCode === constants.SQLITE_CREATE_TABLE) {
+ return constants.SQLITE_DENY;
+ }
+ return constants.SQLITE_OK;
+});
+
+// This will work
+using query = db.prepare('SELECT 1');
+query.get();
+
+// This will throw an error due to authorization denial
+try {
+ db.exec('CREATE TABLE blocked (id INTEGER)');
+} catch (err) {
+ console.log('Operation blocked:', err.message);
+}`
+
+## database.isOpen
+
+History
+
+Added in: v23.11.0, v22.15.0 v23.11.0, v22.15.0
+
+Type:`boolean` Whether the database is currently open or not.
+
+## database.isTransaction
+
+History
+
+Added in: v24.0.0, v22.16.0 v24.0.0, v22.16.0
+
+Type:`boolean`
+
+Whether the database is currently within a transaction. This method is a wrapper around `sqlite3_get_autocommit()`.
+
+## database.limits
+
+History
+
+Added in: v25.8.0 v25.8.0
+
+Type:`Object`
+
+An object for getting and setting SQLite database limits at runtime. Each property corresponds to an SQLite limit and can be read or written.
+
+`const db = new DatabaseSync(':memory:');
+
+// Read current limit
+console.log(db.limits.length);
+
+// Set a new limit
+db.limits.sqlLength = 100000;
+
+// Reset a limit to its compile-time maximum
+db.limits.sqlLength = Infinity;`
+
+Available properties: `length`, `sqlLength`, `column`, `exprDepth`, `compoundSelect`, `vdbeOp`, `functionArg`, `attach`, `likePatternLength`, `variableNumber`, `triggerDepth`.
+
+Setting a property to `Infinity` resets the limit to its compile-time maximum value.
+
+## database.open
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+`database.open(): void`
+
+Opens the database specified in the `path` argument of the `DatabaseSync` constructor. This method should only be used when the database is not opened via the constructor. An exception is thrown if the database is already open.
+
+## database.serialize
+
+History
+
+Added in: v26.1.0 v26.1.0
+
+`database.serialize(dbName?): Uint8Array`
+
+dbName?:`string`
+
+Name of the database to serialize. This can be `'main'` (the default primary database) or any other database that has been added with `ATTACH DATABASE`. Default: `'main'`.
+
+Returns:`Uint8Array` A binary representation of the database.
+
+Serializes the database into a binary representation, returned as a `Uint8Array`. This is useful for saving, cloning, or transferring an in-memory database. This method is a wrapper around `sqlite3_serialize()`.
+
+`import { DatabaseSync } from 'node:sqlite';
+
+const db = new DatabaseSync(':memory:');
+db.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+db.exec("INSERT INTO t VALUES (1, 'hello')");
+const buffer = db.serialize();
+console.log(buffer.length); // Prints the byte length of the database`
+
+`const { DatabaseSync } = require('node:sqlite');
+
+const db = new DatabaseSync(':memory:');
+db.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+db.exec("INSERT INTO t VALUES (1, 'hello')");
+const buffer = db.serialize();
+console.log(buffer.length); // Prints the byte length of the database`
+
+## database.deserialize
+
+History
+
+Added in: v26.1.0 v26.1.0
+
+`database.deserialize(buffer, options?): void`
+
+buffer:`Uint8Array`
+
+A binary representation of a database, such as the output of `database.serialize()`.
+
+options:`Object`
+
+Optional configuration for the deserialization.
+
+dbName?:`string` Name of the database to deserialize into. Default: `'main'`.
+
+Loads a serialized database into this connection, replacing the current database. The deserialized database is writable. Existing prepared statements are finalized before deserialization is attempted, even if the operation subsequently fails. An `ERR_INVALID_STATE` error is thrown if the method is called while a database callback is on the stack, for example a user-defined function, an aggregate function, an authorizer, or a changeset filter or conflict handler. This method is a wrapper around `sqlite3_deserialize()`.
+
+`import { DatabaseSync } from 'node:sqlite';
+
+const original = new DatabaseSync(':memory:');
+original.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+original.exec("INSERT INTO t VALUES (1, 'hello')");
+const buffer = original.serialize();
+original.close();
+
+const clone = new DatabaseSync(':memory:');
+clone.deserialize(buffer);
+using query = clone.prepare('SELECT value FROM t');
+console.log(query.get());
+// Prints: { value: 'hello' }`
+
+`const { DatabaseSync } = require('node:sqlite');
+
+const original = new DatabaseSync(':memory:');
+original.exec('CREATE TABLE t(key INTEGER PRIMARY KEY, value TEXT)');
+original.exec("INSERT INTO t VALUES (1, 'hello')");
+const buffer = original.serialize();
+original.close();
+
+const clone = new DatabaseSync(':memory:');
+clone.deserialize(buffer);
+using query = clone.prepare('SELECT value FROM t');
+console.log(query.get());
+// Prints: { value: 'hello' }`
+
+## database.prepare
+
+History
+
+Added in: v22.5.0 v22.5.0
+
+Add the `persistent` option.
+
+v26.8.0
+
+Throw `ERR_INVALID_ARG_VALUE` if `sql` contains no statements.
+
+v26.8.0
+
+`database.prepare(sql, options?): StatementSync`
+
+sql:`string` A SQL string to compile to a prepared statement.
+
+Optional configuration for the prepared statement.
+
+readBigInts?:`boolean`
+
+If `true`, integer fields are read as `BigInt` s. Default: inherited from database options or `false`.
+
+returnArrays?:`boolean`
+
+If `true`, results are returned as arrays. Default: inherited from database options or `false`.
+
+allowBareNamedParameters?:`boolean`
+
+If `true`, allows binding named parameters without the prefix character. Default: inherited from database options or `true`.
+
+allowUnknownNamedParameters?:`boolean`
+
+If `true`, unknown named parameters are ignored. Default: inherited from database options or `false`.
+
+persistent?:`boolean`
+
+If `true`, hints to SQLite that this statement will be retained for a long time and likely reused many times. SQLite currently responds to this hint by avoiding lookaside memory. Corresponds to the `SQLITE_PREPARE_PERSISTENT` flag. Default: `false`.
+
+Returns:`StatementSync` The prepared statement.
+
+Compiles a SQL statement into a prepared statement. This method is a wrapper around `sqlite3_prepare_v3()`.
+
+## database.createTagStore
+
+History
+
+Added in: v24.9.0 v24.9.0
+
+`database.createTagStore(maxSize?): SQLTagStore`
+
+maxSize?:`integer`
+
+The maximum number of prepared statements to cache. Default: `1000`.
+
+Returns:`SQLTagStore` A new SQL tag store for caching prepared statements.
+
+Creates a new `SQLTagStore`, which is a Least Recently Used (LRU) cache for storing prepared statements. This allows for the efficient reuse of prepared statements by tagging them with a unique identifier.
+
+When a tagged SQL literal is executed, the `SQLTagStore` checks if a prepared statement for the corresponding SQL query string already exists in the cache. If it does, the cached statement is used. If not, a new prepared statement is created, executed, and then stored in the cache for future use. This mechanism helps to avoid the overhead of repeatedly parsing and preparing the same SQL statements.
+
+Tagged statements bind the placeholder values from the template literal as parameters to the underlying prepared statement. For example:
+
+`sqlTagStore.get`SELECT ${value}`;`
+
+is equivalent to:
+
+`using statement = db.prepare('SELECT ?');
+statement.get(value);`
+
+However, in the first example, the tag store will cache the underlying prepared statement for future use.
+
+> Note: The `${value}` syntax in tagged statements binds a parameter to the prepared statement. This differs from its behavior in untagged template literals, where it performs string interpolation.
+> 
+> `// This a safe example of binding a parameter to a tagged statement.
+> sqlTagStore.run`INSERT INTO t1 (id) VALUES (${id})`;
+> 
+> // This is an *unsafe* example of an untagged template string.
+> // `id` is interpolated into the query text as a string.
+> // This can lead to SQL injection and data corruption.
+> db.run(`INSERT INTO t1 (id) VALUES (${id})`);`
+> 
+> JavaScript Copy to clipboard
+
+The tag store will match a statement from the cache if the query strings (including the positions of any bound placeholders) are identical.
+
+`// The following statements will match in the cache:
+sqlTagStore.get`SELECT * FROM t1 WHERE id = ${id} AND active = 1`;
+sqlTagStore.get`SELECT * FROM t1 WHERE id = ${12345} AND active = 1`;
+
+// The following statements will not match, as the query strings
+// and bound placeholders differ:
+sqlTagStore.get`SELECT * FROM t1 WHERE id = ${id} AND active = 1`;
+sqlTagStore.get`SELECT * FROM t1 WHERE id = 12345 AND active = 1`;
+
+// The following statements will not match, as matches are case-sensitive:
+sqlTagStore.get`SELECT * FROM t1 WHERE id = ${id} AND active = 1`;
+sqlTagStore.get`select * from t1 where id = ${id} and active = 1`;`
+
+The only way of binding parameters in tagged statements is with the `${value}` syntax. Do not add parameter binding placeholders (`?` etc.) to the SQL query string itself.
+
+`import { DatabaseSync } from 'node:sqlite';
+
+const db = new DatabaseSync(':memory:');
+const sql = db.createTagStore();
+
+db.exec('CREATE TABLE users (id INT, name TEXT)');
+
+// Using the 'run' method to insert data.
+// The tagged literal is used to identify the prepared statement.
+sql.run`INSERT INTO users VALUES (1, 'Alice')`;
+sql.run`INSERT INTO users VALUES (2, 'Bob')`;
+
+// Using the 'get' method to retrieve a single row.
+const name = 'Alice';
+const user = sql.get`SELECT * FROM users WHERE name = ${name}`;
+console.log(user); // { id: 1, name: 'Alice' }
+
+// Using the 'all' method to retrieve all rows.
+const allUsers = sql.all`SELECT * FROM users ORDER BY id`;
+console.log(allUsers);
+// [
+// { id: 1, name: 'Alice' },
+// { id: 2, name: 'Bob' }
+// ]`
+
+`const { DatabaseSync } = require('node:sqlite');
+
+const db = new DatabaseSync(':memory:');
+const sql = db.createTagStore();
+
+db.exec('CREATE TABLE users (id INT, name TEXT)');
+
+// Using the 'run' method to insert data.
+// The tagged literal is used to identify the prepared statement.
+sql.run`INSERT INTO users VALUES (1, 'Alice')`;
+sql.run`INSERT INTO users VALUES (2, 'Bob')`;
+
+// Using the 'get' method to retrieve a single row.
+const name = 'Alice';
+const user = sql.get`SELECT * FROM users WHERE name = ${name}`;
+console.log(user); // { id: 1, name: 'Alice' }
+
+// Using the 'all' method to retrieve all rows.
+const allUsers = sql.all`SELECT * FROM users ORDER BY id`;
+console.log(allUsers);
+// [
+// { id: 1, name: 'Alice' },
+// { id: 2, name: 'Bob' }
+// ]`
+
+## database.createSession
+
+History
+
+Added in: v23.3.0, v22.12.0 v23.3.0, v22.12.0
+
+`database.createSession(options?): Session`
+
+options:`Object`
+
+The configuration options for the session.
+
+table:`string`
+
+A specific table to track changes for. By default, changes to all tables are tracked.
+
+db:`string`
+
+Name of the database to track. This is useful when multiple databases have been added using `ATTACH DATABASE`. Default: `'main'`.
+
+Returns:`Session` A session handle.
+
+Creates and attaches a session to the database. This method is a wrapper around `sqlite3session_create()` and `sqlite3session_attach()`.
+
+## database.applyChangeset
+
+History
+
+Added in: v23.3.0, v22.12.0 v23.3.0, v22.12.0
+
+`database.applyChangeset(changeset, options?): boolean`
+
+Attributes
+
+changeset:`Uint8Array` A binary changeset or patchset.
+
+options:`Object`
+
+The configuration options for how the changes will be applied.
+
+for each table affected by at least one change in the changeset, the `filter` callback is invoked with the table name as the first argument. If the return value is falsy, then no attempt is made to apply any changes to the table. Otherwise, if the return value is truthy or no `filter` callback is provided, all changes related to the table are attempted.
+
+onConflict:`Function`
+
+A function that determines how to handle conflicts. The function receives one argument, which can be one of the following values:
+
+SQLITE_CHANGESET_DATA:
+
+A `DELETE` or `UPDATE` change does not contain the expected "before" values.
+
+SQLITE_CHANGESET_NOTFOUND:
+
+A row matching the primary key of the `DELETE` or `UPDATE` change does not exist.
+
+SQLITE_CHANGESET_CONFLICT: An `INSERT` change results in a duplicate primary key.
+
+SQLITE_CHANGESET_FOREIGN_KEY: Applying a change would result in a foreign key violation.
+
+SQLITE_CHANGESET_CONSTRAINT:
+
+Applying a change results in a `UNIQUE`, `CHECK`, or `NOT NULL` constraint violation.
+
+Returns:`boolean`
+
+Whether the changeset was applied successfully without being aborted.
+
+An exception is thrown if the database is not open. This method is a wrapper around `sqlite3changeset_apply()`.
+
+`import { DatabaseSync } from 'node:sqlite';
+
+const sourceDb = new DatabaseSync(':memory:');
+const targetDb = new DatabaseSync(':memory:');
+
+sourceDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+targetDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+
+const session = sourceDb.createSession();
+
+using insert = sourceDb.prepare('INSERT INTO data (key, value) VALUES (?, ?)');
+insert.run(1, 'hello');
+insert.run(2, 'world');
+
+const changeset = session.changeset();
+targetDb.applyChangeset(changeset);
+// Now that the changeset has been applied, targetDb contains the same data as sourceDb.`
+
+`const { DatabaseSync } = require('node:sqlite');
+
+const sourceDb = new DatabaseSync(':memory:');
+const targetDb = new DatabaseSync(':memory:');
+
+sourceDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+targetDb.exec('CREATE TABLE data(key INTEGER PRIMARY KEY, value TEXT)');
+
+const session = sourceDb.createSession();
+
+using insert = sourceDb.prepare('INSERT INTO data (key, value) VALUES (?, ?)');
+insert.run(1, 'hello');
+insert.run(2, 'world');
+
+const changeset = session.changeset();
+targetDb.applyChangeset(changeset);
+// Now that the changeset has been applied, targetDb contains the same data as sourceDb.`
+
+## database[Symbol.dispose]
+
+History
+
+Added in: v23.11.0, v22.15.0 v23.11.0, v22.15.0
+
+No longer experimental.
+
+v24.2.0
+
+`database[Symbol.dispose](): void`
+
+Closes the database connection. If the database connection is already closed then this is a no-op.

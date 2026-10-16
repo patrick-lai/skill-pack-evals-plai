@@ -1,0 +1,21 @@
+{
+  "name": "quay",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Quay is a local team task board.",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "start": "concurrently -k -n api,web -c cyan,yellow \"npm run start --workspace=@quay/server\" \"npm run start --workspace=@quay/client\"",
+    "test": "npm run test --workspace=@quay/server && npm run test --workspace=@quay/client",
+    "typecheck": "npm run typecheck --workspace=@quay/server && npm run typecheck --workspace=@quay/client"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "devDependencies": {
+    "concurrently": "^10.0.6"
+  }
+}

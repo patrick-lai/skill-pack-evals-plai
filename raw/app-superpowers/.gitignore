@@ -1,0 +1,8 @@
+node_modules/
+dist/
+data/
+.superpowers/
+*.sqlite
+*.sqlite-journal
+*.sqlite-wal
+*.sqlite-shm

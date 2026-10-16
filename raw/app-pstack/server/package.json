@@ -1,0 +1,22 @@
+{
+  "name": "@plank/server",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "node --experimental-sqlite --import tsx src/index.ts",
+    "test": "NODE_OPTIONS='--experimental-sqlite' vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.19.6",
+    "@plank/shared": "*",
+    "hono": "^4.10.3"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "tsx": "^4.20.6",
+    "typescript": "~6.0.2",
+    "vitest": "^3.2.4"
+  }
+}
