@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skill-pack benchmark: executive report</title>
+<style>
+:root{--ink:#1c1c1e;--mute:#6e6e73;--line:#e5e5ea;--bg:#fbfbfd;--card:#fff;--acc:#0b6e4f;--r:12px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+main{max-width:1040px;margin:0 auto;padding:56px 28px 96px}
+h1{font-size:40px;line-height:1.1;letter-spacing:-.02em;margin:0 0 10px;font-weight:650}
+h2{font-size:26px;letter-spacing:-.01em;margin:72px 0 6px;font-weight:620}
+h3{font-size:18px;margin:28px 0 8px}
+.lede{color:var(--mute);font-size:19px;max-width:720px;margin:0 0 32px}
+.picks{display:grid;grid-template-columns:200px 1fr 64px;border-top:1px solid var(--line)}
+.picks>div{padding:14px 0;border-bottom:1px solid var(--line)}
+.picks .n{font-weight:600}.picks .s{text-align:right;font-variant-numeric:tabular-nums;font-weight:600}
+.note{margin-top:22px;padding:14px 18px;border-radius:var(--r);background:#fff7e6;border:1px solid #f2deb0;font-size:15px}
+.sub{color:var(--mute);margin:0 0 20px}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;background:var(--card);border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+th,td{padding:11px 14px;text-align:right;border-bottom:1px solid var(--line)}th:first-child,td:first-child{text-align:left}
+th{font-size:13px;color:var(--mute);font-weight:500}tr:last-child td{border-bottom:0}
+td.top{color:var(--acc);font-weight:650}
+details{background:var(--card);border:1px solid var(--line);border-radius:var(--r);margin:14px 0;padding:0 20px}
+summary{cursor:pointer;padding:16px 0;font-weight:600;list-style:none}summary::-webkit-details-marker{display:none}
+summary:after{content:"+";float:right;color:var(--mute)}details[open] summary:after{content:"-"}
+details>div{padding-bottom:20px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+figure{margin:0}figure img,video{width:100%;display:block;border-radius:8px;border:1px solid var(--line);background:#000}
+figure img{background:#fff}
+.shot{position:relative}
+.tag{position:absolute;left:10px;top:10px;background:var(--ink);color:#fff;font-size:12px;padding:3px 9px;border-radius:999px}
+.flag{position:absolute;right:10px;bottom:10px;max-width:70%;background:#fff;border:2px solid var(--acc);color:var(--ink);font-size:13px;padding:6px 10px;border-radius:8px;box-shadow:0 2px 10px rgba(0,0,0,.12)}
+.flag.warn{border-color:#c0392b}
+figcaption{font-size:14px;color:var(--mute);margin-top:8px}
+.pack{display:grid;grid-template-columns:200px 1fr;gap:20px;padding:22px 0;border-top:1px solid var(--line)}
+blockquote{margin:0 0 6px;padding-left:14px;border-left:3px solid var(--acc);font-size:15px}
+.ev{font-size:15px;margin:0 0 4px}.src{font-size:12px;color:var(--mute);margin:0 0 16px;word-break:break-all}
+footer{margin-top:72px;color:var(--mute);font-size:13px}
+@media (max-width:720px){.grid,.pack{grid-template-columns:1fr}.picks{grid-template-columns:120px 1fr 48px}h1{font-size:30px}}
+</style></head><body><main>
+
+<h1>Which skill pack should we standardise on?</h1>
+<p class="lede">Four packs, four real tasks, one blind judge. Each pack built a promo video, a full task-board app, a new feature and a bug fix on the same model and prompts. Scores out of 100.</p>
+
+<div class="picks">
+<div class="n">superpowers</div><div>Safest default. Steady 22 to 23 on every task, most tests, best video and best feature. Fast.</div><div class="s">89</div>
+<div class="n">Addy Osmani</div><div>Best at greenfield apps. Only app with session expiry and keyboard drag. Weakest at checking its own video.</div><div class="s">89</div>
+<div class="n">Matt Pocock</div><div>Lean and tidy, no surprises, but thinner tests and no task win.</div><div class="s">84</div>
+<div class="n">pstack</div><div>Excellent at bug fixes (perfect 25). Weakest app and feature, and far slower: 85 min on the feature vs 10 to 32.</div><div class="s">83</div>
+</div>
+<p class="note"><strong>Read as a rough ranking.</strong> Each pack ran each task once. The whole spread is 6 points out of 100 and one rerun could flip it. Token cost was not logged, so this compares quality, not spend. Every app, feature and bug-fix output passed its own tests on a clean machine.</p>
+
+<h2>Scores</h2>
+<p class="sub">Out of 25 per task. Highest per task in green.</p>
+<table><thead><tr><th>Pack</th><th>Video</th><th>App</th><th>Feature</th><th>Bug fix</th><th>Total</th></tr></thead><tbody>
+<tr><td>Addy Osmani</td><td>21</td><td class="top">24</td><td>22</td><td>22</td><td><strong>89</strong></td></tr>
+<tr><td>superpowers</td><td class="top">22</td><td>22</td><td class="top">23</td><td>22</td><td><strong>89</strong></td></tr>
+<tr><td>Matt Pocock</td><td>21</td><td>20</td><td>22</td><td>21</td><td><strong>84</strong></td></tr>
+<tr><td>pstack</td><td>20</td><td>19</td><td>19</td><td class="top">25</td><td><strong>83</strong></td></tr>
+</tbody></table>
+
+<details><summary>Per-criterion scores (correctness, code, scope, verification, craft)</summary><div>
+<h3>Video</h3><table><tr><th>Pack</th><th>Corr</th><th>Code</th><th>Scope</th><th>Verif</th><th>Craft</th></tr>
+<tr><td>Addy Osmani</td><td>5</td><td>4</td><td>4</td><td>3</td><td>5</td></tr><tr><td>superpowers</td><td>5</td><td>5</td><td>4</td><td>5</td><td>3</td></tr><tr><td>Matt Pocock</td><td>5</td><td>4</td><td>5</td><td>4</td><td>3</td></tr><tr><td>pstack</td><td>5</td><td>4</td><td>5</td><td>4</td><td>2</td></tr></table>
+<h3>App</h3><table><tr><th>Pack</th><th>Corr</th><th>Code</th><th>Scope</th><th>Verif</th><th>Craft</th></tr>
+<tr><td>Addy Osmani</td><td>5</td><td>5</td><td>4</td><td>5</td><td>5</td></tr><tr><td>superpowers</td><td>5</td><td>4</td><td>5</td><td>5</td><td>3</td></tr><tr><td>Matt Pocock</td><td>5</td><td>3</td><td>5</td><td>3</td><td>4</td></tr><tr><td>pstack</td><td>3</td><td>5</td><td>4</td><td>3</td><td>4</td></tr></table>
+<h3>Feature</h3><p class="sub">Scored as totals only (process notes excluded for all four). Clean-machine tests, server / client: superpowers 11 / 26, Addy 10 / 20, Matt 12 / 18, pstack 8 / 18.</p>
+<h3>Bug fix</h3><table><tr><th>Pack</th><th>Corr</th><th>Code</th><th>Scope</th><th>Verif</th><th>Craft</th></tr>
+<tr><td>Addy Osmani</td><td>5</td><td>4</td><td>5</td><td>4</td><td>4</td></tr><tr><td>superpowers</td><td>5</td><td>4</td><td>5</td><td>4</td><td>4</td></tr><tr><td>Matt Pocock</td><td>5</td><td>4</td><td>4</td><td>4</td><td>4</td></tr><tr><td>pstack</td><td>5</td><td>5</td><td>5</td><td>5</td><td>5</td></tr></table>
+<p class="sub">All four made the same one-line fix. The bug-fix scores differ only on the tests written.</p>
+</div></details>
+
+<h2>Why each pack behaved this way</h2>
+<p class="sub">Lines from each pack's own instructions, next to what we observed.</p>
+<div class="pack"><div class="n"><strong>superpowers</strong></div><div>
+<blockquote>NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST</blockquote>
+<p class="ev">Most tests on the feature (11 server, 26 client), including a 403 test for deleting someone else's comment. Its video run added a verify script checking 1080p, H.264 and length.</p>
+<p class="src">bench/feature-superpowers/.cursor/skills/test-driven-development/SKILL.md:34</p></div></div>
+<div class="pack"><div class="n"><strong>Addy Osmani</strong></div><div>
+<blockquote>Session cookies are `httpOnly`, `secure`, and `sameSite: 'lax'` or `'strict'` ... with a bounded `maxAge`.</blockquote>
+<p class="ev">Only app that expires sessions in the database query: "WHERE s.id = ? AND s.expires_at &gt; ?".</p>
+<p class="src">bench/app-addyosmani/.cursor/skills/security-and-hardening/SKILL.md:90</p>
+<blockquote>Every interactive element must be keyboard accessible</blockquote>
+<p class="ev">Only app with keyboard drag between columns (KeyboardSensor with sortableKeyboardCoordinates).</p>
+<p class="src">bench/app-addyosmani/.cursor/skills/frontend-ui-engineering/SKILL.md:183</p></div></div>
+<div class="pack"><div class="n"><strong>Matt Pocock</strong></div><div>
+<blockquote>One slice at a time. One seam, one test, one minimal implementation per cycle.</blockquote>
+<p class="ev">Judge called the app "lean, no extras", but coverage stayed shallow (6 API + 5 UI tests) and the whole API sits in one ~500-line file.</p>
+<p class="src">bench/app-mattpocock/.cursor/skills/tdd/SKILL.md:37</p></div></div>
+<div class="pack"><div class="n"><strong>pstack</strong></div><div>
+<blockquote>Spawn N parallel candidates at the same task, pick a base, graft the strongest parts of the losers into it.</blockquote>
+<p class="ev">The app and video runs launched "Arena design" candidate agents (run log: "arena wants two candidates"). App run took 39 minutes.</p>
+<p class="src">pstack 850d7f2e skills/arena/SKILL.md:3 · evidence raw/app-pstack/run-log.md:20</p>
+<blockquote>Spawn Comment Sicko, fix accepted findings, and offer encodings for claimed constraints.</blockquote>
+<p class="ev">The feature run spawned a "Review comments in the diff" agent and took 85 minutes against 10 to 32 for the others, still ending with the widest diff (18 files).</p>
+<p class="src">pstack 850d7f2e skills/no-comments/SKILL.md:3 · evidence raw/feature-pstack/run-log.md (23:37 to 01:02 UTC)</p></div></div>
+
+<h2>Drill down</h2>
+<p class="sub">Real screenshots of each pack's running app, captured on the box with seeded demo data. Callouts are judge findings.</p>
+
+<details><summary>App: a team task board built from scratch</summary><div>
+<div class="grid">
+<figure><div class="shot"><img src="shots/app-addyosmani-board.jpg" alt="Addy Osmani app board" loading="lazy"><span class="tag">Addy Osmani · 24</span><span class="flag">Sessions expire; keyboard drag between columns</span></div><figcaption>Best app. Broadest tests (~24 API cases).</figcaption></figure>
+<figure><div class="shot"><img src="shots/app-superpowers-board.jpg" alt="superpowers app board" loading="lazy"><span class="tag">superpowers · 22</span><span class="flag warn">Pointer drag only, no keyboard</span></div><figcaption>Tests session expiry directly.</figcaption></figure>
+<figure><div class="shot"><img src="shots/app-mattpocock-board.jpg" alt="Matt Pocock app board" loading="lazy"><span class="tag">Matt Pocock · 20</span><span class="flag warn">Members stored by email only, so assignees show as emails</span></div><figcaption>Hashed session tokens. Whole API in one file, 6 API tests.</figcaption></figure>
+<figure><div class="shot"><img src="shots/app-pstack-board.jpg" alt="pstack app board" loading="lazy"><span class="tag">pstack · 19</span><span class="flag warn">Sessions never expire; only 3 API tests</span></div><figcaption>Clean code, but a real security gap.</figcaption></figure>
+</div>
+<h3>Sign-in screens</h3>
+<div class="grid">
+<figure><div class="shot"><img src="shots/app-addyosmani-login.jpg" alt="" loading="lazy"><span class="tag">Addy Osmani</span></div></figure>
+<figure><div class="shot"><img src="shots/app-superpowers-login.jpg" alt="" loading="lazy"><span class="tag">superpowers</span></div></figure>
+<figure><div class="shot"><img src="shots/app-mattpocock-login.jpg" alt="" loading="lazy"><span class="tag">Matt Pocock</span></div></figure>
+<figure><div class="shot"><img src="shots/app-pstack-login.jpg" alt="" loading="lazy"><span class="tag">pstack</span></div></figure>
+</div></div></details>
+
+<details><summary>Feature: add comments to tasks</summary><div>
+<div class="grid">
+<figure><div class="shot"><img src="shots/feature-superpowers-task-comments.jpg" alt="" loading="lazy"><span class="tag">superpowers · 23</span><span class="flag">All 3 comments visible, absolute timestamps</span></div><figcaption>"No comments yet." empty state; 403 test for others' deletes.</figcaption></figure>
+<figure><div class="shot"><img src="shots/feature-addyosmani-task-comments.jpg" alt="" loading="lazy"><span class="tag">Addy Osmani · 22</span><span class="flag">All 3 comments visible, absolute timestamps</span></div><figcaption>Solid, no bugs.</figcaption></figure>
+<figure><div class="shot"><img src="shots/feature-mattpocock-task-comments.jpg" alt="" loading="lazy"><span class="tag">Matt Pocock · 22</span><span class="flag warn">List height-capped: 2 of 3 comments visible</span></div><figcaption>Solid, no bugs.</figcaption></figure>
+<figure><div class="shot"><img src="shots/feature-pstack-task-comments.jpg" alt="" loading="lazy"><span class="tag">pstack · 19</span><span class="flag warn">Height-capped (2 of 3); relative times ("3m ago")</span></div><figcaption>18-file diff, fewest tests, no empty state.</figcaption></figure>
+</div>
+<h3>Comment counts on the board</h3>
+<div class="grid">
+<figure><div class="shot"><img src="shots/feature-superpowers-board-comments.jpg" alt="" loading="lazy"><span class="tag">superpowers</span><span class="flag">Every card shows its count</span></div></figure>
+<figure><div class="shot"><img src="shots/feature-addyosmani-board-comments.jpg" alt="" loading="lazy"><span class="tag">Addy Osmani</span><span class="flag">Every card shows its count</span></div></figure>
+<figure><div class="shot"><img src="shots/feature-mattpocock-board-comments.jpg" alt="" loading="lazy"><span class="tag">Matt Pocock</span></div></figure>
+<figure><div class="shot"><img src="shots/feature-pstack-board-comments.jpg" alt="" loading="lazy"><span class="tag">pstack</span><span class="flag warn">Zero counts hidden</span></div></figure>
+</div>
+<p class="sub">All four persist comments, delete them with their task and enforce author-only delete on the server. None asks before deleting.</p>
+</div></details>
+
+<details><summary>Video: a 12 to 15 second product intro</summary><div>
+<div class="grid">
+<figure><video controls preload="none" poster="media/poster-superpowers.jpg" src="media/video-superpowers.mp4"></video><figcaption><strong>superpowers · 22.</strong> Best engineered, self-verified. Motion is stiff: the drag at 0:06 has no easing.</figcaption></figure>
+<figure><video controls preload="none" poster="media/poster-addyosmani.jpg" src="media/video-addyosmani.mp4"></video><figcaption><strong>Addy Osmani · 21.</strong> Best looking: notes snap into a list at 0:03 with clean easing. Only one test.</figcaption></figure>
+<figure><video controls preload="none" poster="media/poster-mattpocock.jpg" src="media/video-mattpocock.mp4"></video><figcaption><strong>Matt Pocock · 21.</strong> Typo "Cel" at 0:03; logo flashes as a grey box at 0:11.</figcaption></figure>
+<figure><video controls preload="none" poster="media/poster-pstack.jpg" src="media/video-pstack.mp4"></video><figcaption><strong>pstack · 20.</strong> "Nothing waiting." overlaps a struck-through task at 0:11.</figcaption></figure>
+</div></div></details>
+
+<details><summary>Bug fix: assignee cleared when a task moves to Done</summary><div>
+<p>All four found the same root cause and made the same one-line fix. pstack scored 25 because its tests were the most thorough and the only ones checking the fix doesn't over-correct: move to done, edit while done, explicit null still clears, and a full editor save. The others scored 21 to 22 on thinner tests.</p>
+</div></details>
+
+<details><summary>Method and caveats</summary><div>
+<p>Same model (Grok 4.7) and prompt per task, a fresh checkout with only one pack installed. Outputs were anonymised as A to D and scored blind on five criteria, 1 to 5 each. App, feature and bug-fix tests were rerun on a clean machine; all pass.</p>
+<p>One run per cell, so gaps of 1 to 2 points are noise. Token cost not measured; pstack's extra agents not costed. Matt Pocock's app run errored once and was rerun. Pack versions: pstack 850d7f2e, superpowers bb92a777, Matt Pocock 49dd158d, Addy Osmani aeac41d4. Full notes, raw outputs and judge scores are in the repository.</p>
+</div></details>
+
+<footer>Skill-pack benchmark · 16 October 2026 · Patrick Lai</footer>
+</main></body></html>
